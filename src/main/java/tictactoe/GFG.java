@@ -3,8 +3,8 @@ package tictactoe;
 import java.io.InputStream;
 import java.util.*;
 
-// Source code from:  https://www.geeksforgeeks.org/tic-tac-toe-game-in-java/
-// But modified a bit further
+// Source code from: https://www.geeksforgeeks.org/tic-tac-toe-game-in-java/
+// But modified a bit further to accomodate tests
 public class GFG {
 
     static String[] board;

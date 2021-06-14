@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+// Test was not present originally on: https://www.geeksforgeeks.org/tic-tac-toe-game-in-java/
 public class GFGTest {
     private static Stream<Arguments> provideInputPositionsForWinningRowsAndColumnsAndDiagonals() {
         return Stream.of(
@@ -23,20 +23,20 @@ public class GFGTest {
                 Arguments.of("Same symbol on Row 1", "1\n4\n2\n5\n3\n", "X"),
                 Arguments.of("Same symbol on Row 2", "4\n1\n5\n2\n6\n", "X"),
                 Arguments.of("Same symbol on Row 3", "7\n2\n8\n5\n6\n4\n9\n", "X"),
-                Arguments.of("Same symbol on Row 1", "1\n4\n2\n5\n3\n", "O"),
-                Arguments.of("Same symbol on Row 2", "4\n1\n5\n2\n6\n", "O"),
-                Arguments.of("Same symbol on Row 3", "7\n2\n8\n5\n6\n4\n9\n", "O"),
-                Arguments.of("Same symbol on Diagonal \\", "7\n2\n8\n5\n6\n4\n9\n", "X"),
-                Arguments.of("Same symbol on Diagonal /", "1\n4\n2\n5\n3\n", "O"),
-                Arguments.of("Same symbol on Diagonal \\", "4\n1\n5\n2\n6\n", "O"),
-                Arguments.of("Same symbol on Diagonal /", "7\n2\n8\n5\n6\n4\n9\n", "O")
+                Arguments.of("Same symbol on Row 1", "7\n1\n5\n2\n9\n3\n", "O"),
+                Arguments.of("Same symbol on Row 2", "1\n4\n2\n5\n9\n6\n", "O"),
+                Arguments.of("Same symbol on Row 3", "2\n7\n5\n8\n3\n9\n", "O"),
+                Arguments.of("Same symbol on Diagonal \\", "1\n2\n5\n4\n9\n", "X"),
+                Arguments.of("Same symbol on Diagonal \\", "3\n1\n2\n5\n4\n9\n", "O"),
+                Arguments.of("Same symbol on Diagonal /", "3\n4\n5\n6\n7\n", "X"),
+                Arguments.of("Same symbol on Diagonal /", "1\n3\n4\n5\n6\n7\n", "O")
         );
     }
 
     // {index} will be replaced with the invocation index. For the first execution is 1, for the second is 2, and so on.
     // {arguments} is a placeholder for the complete, comma-separated list of arguments.
     // {0}, {1}, ... are placeholders for individual arguments.
-    @ParameterizedTest(name = "Winning Test #{index} => {0}, inputPositions are {1}, winner is {2}")
+    @ParameterizedTest(name = "aPlayerWins#{index} => {0}, inputPositions are {1}, winner is {2}")
     @MethodSource("provideInputPositionsForWinningRowsAndColumnsAndDiagonals")
     public void aPlayerWins(String message, String inputPositions, String winner) {
         GFG.runGame(new ByteArrayInputStream(inputPositions.getBytes()));
