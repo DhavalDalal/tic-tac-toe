@@ -6,9 +6,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.ByteArrayInputStream;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // Test was not present originally on: https://www.geeksforgeeks.org/tic-tac-toe-game-in-java/
 public class GFGTest {
@@ -47,5 +49,52 @@ public class GFGTest {
     public void drawBetweenPlayers() {
         GFG.runGame(new ByteArrayInputStream("1\n5\n2\n3\n7\n4\n6\n8\n9\n".getBytes()));
         assertEquals(GFG.checkWinner(), "draw");
+    }
+
+    @Test
+    public void doesNotAllowTakingASlotTwice() {
+        // Given
+        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        System.setOut(interceptor);
+        final ByteArrayInputStream input = new ByteArrayInputStream("1\n1\n".getBytes());
+        try {
+            // When
+            GFG.runGame(input);
+        } catch (NoSuchElementException e) {
+            // Then
+            assertTrue(interceptor.contains("Slot already taken; re-enter slot number:"));
+        }
+    }
+
+    @Test
+    public void acceptsValidSlotNumbersOnly() {
+        // Given
+        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        System.setOut(interceptor);
+        final ByteArrayInputStream input = new ByteArrayInputStream("10\n".getBytes());
+
+        try {
+            // When
+            GFG.runGame(input);
+        } catch (NoSuchElementException e) {
+            // Then
+            assertTrue(interceptor.contains("Invalid input; re-enter slot number:"));
+        }
+    }
+
+    @Test
+    public void doesNotAcceptNonNumericCharactersForASlot() {
+        // Given
+        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        System.setOut(interceptor);
+        final ByteArrayInputStream input = new ByteArrayInputStream("abc\n".getBytes());
+
+        try {
+            // When
+            GFG.runGame(input);
+        } catch (NoSuchElementException e) {
+            // Then
+            assertTrue(interceptor.contains("Invalid input; re-enter slot number:"));
+        }
     }
 }
