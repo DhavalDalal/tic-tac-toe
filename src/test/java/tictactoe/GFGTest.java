@@ -41,7 +41,7 @@ public class GFGTest {
     @ParameterizedTest(name = "aPlayerWins#{index} => {0}, inputPositions are {1}, winner is {2}")
     @MethodSource("provideInputPositionsForWinningRowsAndColumnsAndDiagonals")
     public void aPlayerWins(String message, String inputPositions, String expectedWinner) {
-        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        SysoutCollector interceptor = new SysoutCollector(System.out);
         System.setOut(interceptor);
 
         GFG.runGame(new ByteArrayInputStream(inputPositions.getBytes()));
@@ -50,7 +50,7 @@ public class GFGTest {
 
     @Test
     public void drawBetweenPlayers() {
-        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        SysoutCollector interceptor = new SysoutCollector(System.out);
         System.setOut(interceptor);
 
         GFG.runGame(new ByteArrayInputStream("1\n5\n2\n3\n7\n4\n6\n8\n9\n".getBytes()));
@@ -60,7 +60,7 @@ public class GFGTest {
     @Test
     public void doesNotAllowTakingASlotTwice() {
         // Given
-        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        SysoutCollector interceptor = new SysoutCollector(System.out);
         System.setOut(interceptor);
         final ByteArrayInputStream input = new ByteArrayInputStream("1\n1\n".getBytes());
         try {
@@ -75,7 +75,7 @@ public class GFGTest {
     @Test
     public void acceptsValidSlotNumbersOnly() {
         // Given
-        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        SysoutCollector interceptor = new SysoutCollector(System.out);
         System.setOut(interceptor);
         final ByteArrayInputStream input = new ByteArrayInputStream("10\n".getBytes());
 
@@ -91,7 +91,7 @@ public class GFGTest {
     @Test
     public void doesNotAcceptNonNumericCharactersForASlot() {
         // Given
-        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        SysoutCollector interceptor = new SysoutCollector(System.out);
         System.setOut(interceptor);
         final ByteArrayInputStream input = new ByteArrayInputStream("abc\n".getBytes());
 

@@ -4,10 +4,10 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SysoutInterceptor extends PrintStream {
+public class SysoutCollector extends PrintStream {
     private List<String> messages = new ArrayList<>();
 
-    public SysoutInterceptor(PrintStream original) {
+    public SysoutCollector(PrintStream original) {
         super(original, true);
     }
 
