@@ -41,14 +41,20 @@ public class GFGTest {
     @ParameterizedTest(name = "aPlayerWins#{index} => {0}, inputPositions are {1}, winner is {2}")
     @MethodSource("provideInputPositionsForWinningRowsAndColumnsAndDiagonals")
     public void aPlayerWins(String message, String inputPositions, String expectedWinner) {
+        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        System.setOut(interceptor);
+
         GFG.runGame(new ByteArrayInputStream(inputPositions.getBytes()));
-        assertEquals(expectedWinner, GFG.checkWinner(), message);
+        assertTrue(interceptor.contains(String.format("Congratulations! %s's have won! Thanks for playing.", expectedWinner)), message);
     }
 
     @Test
     public void drawBetweenPlayers() {
+        SysoutInterceptor interceptor = new SysoutInterceptor(System.out);
+        System.setOut(interceptor);
+
         GFG.runGame(new ByteArrayInputStream("1\n5\n2\n3\n7\n4\n6\n8\n9\n".getBytes()));
-        assertEquals(GFG.checkWinner(), "draw");
+        assertTrue(interceptor.contains("It's a draw! Thanks for playing."));
     }
 
     @Test
