@@ -41,42 +41,42 @@ public class GFGTest {
     @ParameterizedTest(name = "aPlayerWins#{index} => {0}, inputPositions are {1}, winner is {2}")
     @MethodSource("provideInputPositionsForWinningRowsAndColumnsAndDiagonals")
     public void aPlayerWins(String message, String inputPositions, String expectedWinner) {
-        SysoutCollector interceptor = new SysoutCollector(System.out);
-        System.setOut(interceptor);
+        SysoutCollector collector = new SysoutCollector(System.out);
+        System.setOut(collector);
 
         GFG.runGame(new ByteArrayInputStream(inputPositions.getBytes()));
-        assertTrue(interceptor.contains(String.format("Congratulations! %s's have won! Thanks for playing.", expectedWinner)), message);
+        assertTrue(collector.contains(String.format("Congratulations! %s's have won! Thanks for playing.", expectedWinner)), message);
     }
 
     @Test
     public void drawBetweenPlayers() {
-        SysoutCollector interceptor = new SysoutCollector(System.out);
-        System.setOut(interceptor);
+        SysoutCollector collector = new SysoutCollector(System.out);
+        System.setOut(collector);
 
         GFG.runGame(new ByteArrayInputStream("1\n5\n2\n3\n7\n4\n6\n8\n9\n".getBytes()));
-        assertTrue(interceptor.contains("It's a draw! Thanks for playing."));
+        assertTrue(collector.contains("It's a draw! Thanks for playing."));
     }
 
     @Test
     public void doesNotAllowTakingASlotTwice() {
         // Given
-        SysoutCollector interceptor = new SysoutCollector(System.out);
-        System.setOut(interceptor);
+        SysoutCollector collector = new SysoutCollector(System.out);
+        System.setOut(collector);
         final ByteArrayInputStream input = new ByteArrayInputStream("1\n1\n".getBytes());
         try {
             // When
             GFG.runGame(input);
         } catch (NoSuchElementException e) {
             // Then
-            assertTrue(interceptor.contains("Slot already taken; re-enter slot number:"));
+            assertTrue(collector.contains("Slot already taken; re-enter slot number:"));
         }
     }
 
     @Test
     public void acceptsValidSlotNumbersOnly() {
         // Given
-        SysoutCollector interceptor = new SysoutCollector(System.out);
-        System.setOut(interceptor);
+        SysoutCollector collector = new SysoutCollector(System.out);
+        System.setOut(collector);
         final ByteArrayInputStream input = new ByteArrayInputStream("10\n".getBytes());
 
         try {
@@ -84,15 +84,15 @@ public class GFGTest {
             GFG.runGame(input);
         } catch (NoSuchElementException e) {
             // Then
-            assertTrue(interceptor.contains("Invalid input; re-enter slot number:"));
+            assertTrue(collector.contains("Invalid input; re-enter slot number:"));
         }
     }
 
     @Test
     public void doesNotAcceptNonNumericCharactersForASlot() {
         // Given
-        SysoutCollector interceptor = new SysoutCollector(System.out);
-        System.setOut(interceptor);
+        SysoutCollector collector = new SysoutCollector(System.out);
+        System.setOut(collector);
         final ByteArrayInputStream input = new ByteArrayInputStream("abc\n".getBytes());
 
         try {
@@ -100,7 +100,7 @@ public class GFGTest {
             GFG.runGame(input);
         } catch (NoSuchElementException e) {
             // Then
-            assertTrue(interceptor.contains("Invalid input; re-enter slot number:"));
+            assertTrue(collector.contains("Invalid input; re-enter slot number:"));
         }
     }
 }
