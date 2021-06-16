@@ -40,9 +40,9 @@ public class GFGTest {
     // {0}, {1}, ... are placeholders for individual arguments.
     @ParameterizedTest(name = "aPlayerWins#{index} => {0}, inputPositions are {1}, winner is {2}")
     @MethodSource("provideInputPositionsForWinningRowsAndColumnsAndDiagonals")
-    public void aPlayerWins(String message, String inputPositions, String winner) {
+    public void aPlayerWins(String message, String inputPositions, String expectedWinner) {
         GFG.runGame(new ByteArrayInputStream(inputPositions.getBytes()));
-        assertEquals(GFG.checkWinner(), winner, message);
+        assertEquals(expectedWinner, GFG.checkWinner(), message);
     }
 
     @Test
